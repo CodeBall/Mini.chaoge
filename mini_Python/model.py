@@ -2,7 +2,6 @@ from manage import Base
 from sqlalchemy import Column,Integer,String,Unicode
 from sqlalchemy.dialects.mysql import INTEGER,BIGINT,TEXT,SMALLINT,LONGTEXT,DOUBLE
 
-
 class Area(Base):
     __tablename__ = 'babel_area'
     aid = Column(INTEGER(10),nullable=False,autoincrement=True,primary_key=True)
@@ -106,6 +105,18 @@ class Topic(Base):
     tpc_bak3 = Column(BIGINT(20),default=None)
     tpc_bak4 = Column(BIGINT(20),default=None)
 
+
+class Tag(Base):
+    __tablename__ = "babel_tag"
+    tag_id = Column(INTEGER(10),nullable=False,autoincrement=True,primary_key=True)
+    tag_name = Column(String(60),nullable=False)
+    tag_node = Column(INTEGER(10),index=True,nullable=False)
+    tag_pid = Column(INTEGER(10),index=True,nullable=False)
+    tag_level = Column(INTEGER(10),index=True,nullable=False)
+
+    def __repr__(self):
+        return "tag_name = %s,tag_node = %d,tag_pid = %d;tag_level = %d" % (self.tag_name,self.tag_node,self.tag_pid,self.tag_level)
+
 class User(Base):
     __tablename__ = "babel_user"
     usr_id = Column(INTEGER(10,unsigned=True),nullable=False,autoincrement=True,primary_key=True)
@@ -146,3 +157,5 @@ class User(Base):
     usr_bak2 = Column(Unicode(255),default=None)
     usr_bak3 = Column(BIGINT(20),default=None)
     usr_bak4 = Column(BIGINT(20),default=None)
+
+# Base.metadata.create_all(engine)

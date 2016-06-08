@@ -1,4 +1,5 @@
 from flask import render_template
+from flask import request
 from manage import app,session
 from model import *
 
@@ -7,11 +8,17 @@ from model import *
 def index():
     rnt = {}
     nodes = session.query(Node).filter_by(nod_pid = 21).all()
-    for i in nodes:
-        two = session.query(Node).filter_by(nod_pid=i.node_id).all()
-        rnt[i.node_id] = two
-    return render_template('index.html',nodes = nodes,rnt = rnt)
+    rnt[21] = nodes
+    list = [21,]
 
+    for x in list:
+        for i in rnt[x]:
+            two = session.query(Node).filter_by(nod_pid=i.node_id).all()
+            if(two):
+                rnt[i.node_id] = two
+                list.append(i.node_id)
+
+    return render_template('index.html',start = 21,rnt = rnt)
 
 @app.route('/node/children/<int:id>/<int:pid>')
 def node_children(id,pid):
@@ -102,3 +109,4 @@ def user(user_id):
         status = 1
 
     return render_template('user.html',status = status,itself = itself,topic = topic)
+
