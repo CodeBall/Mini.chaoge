@@ -1,3 +1,11 @@
+__all__ = (
+    'Area',
+    'Node',
+    'Reply',
+    'Topic',
+    'Tag',
+    'User',
+)
 from manage import Base
 from sqlalchemy import Column,Integer,String,Unicode
 from sqlalchemy.dialects.mysql import INTEGER,BIGINT,TEXT,SMALLINT,LONGTEXT,DOUBLE
